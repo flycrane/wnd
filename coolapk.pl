@@ -1,4 +1,27 @@
-#! /usr/bin/perl 
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.03.26.07.22.41;	author txia;	state Exp;
+branches;
+next	;
+
+
+desc
+@exit
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#! /usr/bin/perl 
 
 $| = 1;
 use strict;
@@ -25,7 +48,7 @@ close FH;
 
 sub process
 {
-    my ($keyword) = @_;
+    my ($keyword) = @@_;
     my $sum = 0;
 
     my $pre = 'http://www.coolapk.com/search/?q=';
@@ -38,15 +61,15 @@ sub process
         last if($page > 30); # for safety
         
         my $dom = $ua->get($url => {Referer => 'http://www.coolapk.com/'})->res->dom->find("td.down > a");
-        last if (! @$dom); # invalid request, page > max
+        last if (! @@$dom); # invalid request, page > max
 
-        for my $t (@$dom)
+        for my $t (@@$dom)
         {
             my $down =$t->{"href"};
             $down = "http://www.coolapk.com".$down;
 
             my $dom2 = $ua->get($down => {Referer => 'http://www.coolapk.com/'})->res->dom->find('div#mainArea > script');
-            next if (! @$dom2);
+            next if (! @@$dom2);
             
             my $code = $dom2->[0]->[0]->{"tree"}->[4]->[1];
             next if(! $code);
@@ -65,3 +88,4 @@ sub process
     return $sum;
 }
 
+@
